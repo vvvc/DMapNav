@@ -26,7 +26,6 @@ static MapNavigationManager * MBManager = nil;
 {
     CGFloat longitude;//经度
     CGFloat latitude;//纬度
-
 }
 
 //@property (nonatomic, strong) NSString *longitude;
@@ -82,8 +81,8 @@ static MapNavigationManager * MBManager = nil;
         isOnece = NO;
         //只打印一次经纬度
         NSLog(@"lat lng (%6f, %6f)", lat, lng);
-        longitude = lng;
-        latitude = lat;
+        self->longitude = lng;
+        self->latitude = lat;
         if (!isOnece) {
             [MoLocationManager stop];
         }
@@ -162,7 +161,7 @@ static MapNavigationManager * MBManager = nil;
 - (void)startNavigation:(MapSelect)index {
     NSString * urlString = [self getUrlStr:index];
     if (urlString != nil) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:urlString] options:@{} completionHandler:nil];
     } else if(_style == Coordinates) {
         MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
         MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:self.Coordinate2D addressDictionary:nil]];
